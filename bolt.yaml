@@ -1,4 +1,5 @@
-modulepath: "/home/cas/working_dir/demo/modules:/home/cas/.puppetlabs/task-modules/modules"
+modulepath: "/home/cas/working_dir/bolt_demo/modules:/home/cas/.puppetlabs/task-modules/modules"
+inventoryfile: "/home/cas/working_dir/bolt_demo/inventory.yaml"
 puppetdb:
   server_urls: ["https://xjslan4e8hxm6an.delivery.puppetlabs.net:8081"]
   cacert: /etc/puppetlabs/puppet/ssl/certs/ca.pem

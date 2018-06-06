@@ -1,0 +1,6 @@
+{
+  "implementations": [
+    {"name": "multi_task.sh", "requirements": ["shell"]},
+    {"name": "multi_task.ps1", "requirements": ["powershell"]}
+  ]
+}

@@ -43,6 +43,56 @@ Finished: task apply::resource with 0 failures in 2.39 sec
 
 ```
 
+Write a task that shows off multiple task implementations
+
+## multi_task.ps1
+```
+param ($message)
+$result = @{"windows" = $message}
+ConvertTo-Json -InputObject $result
+```
+
+## multi_task.sh
+```
+#!/usr/bin/env bash
+
+cat <<JSON
+{ "bash": "${PT_message}" }
+JSON
+```
+
+## multi_task.json
+```
+{
+  "implementations": [
+    {"name": "multi_task.sh", "requirements": ["shell"]},
+    {"name": "multi_task.ps1", "requirements": ["powershell"]}
+  ]
+}
+```
+
+## demo invocation
+```
+bolt task run demo::multi_task -n windows,linux --configfile /home/cas/working_dir/bolt_demo/bolt.yaml message="yay multitasking!"
+```
+
+## output/result
+```
+Started on x575vokuxtx5b6q.delivery.puppetlabs.net...
+Started on t02hlpmgwicjtkh.delivery.puppetlabs.net...
+Finished on t02hlpmgwicjtkh.delivery.puppetlabs.net:
+  {
+    "bash": "yay multitasking!"
+  }
+Finished on x575vokuxtx5b6q.delivery.puppetlabs.net:
+  {
+    "windows": "yay multitasking!"
+  }
+Successful on 2 nodes: x575vokuxtx5b6q.delivery.puppetlabs.net,t02hlpmgwicjtkh.delivery.puppetlabs.net
+Ran on 2 nodes in 2.57 seconds
+
+```
+
 ### Setup: PE install on vmpooler
 ```
 Your VMs on vmpooler.delivery.puppetlabs.net:
@@ -50,8 +100,8 @@ Your VMs on vmpooler.delivery.puppetlabs.net:
 - xjslan4e8hxm6an.delivery.puppetlabs.net (redhat-7-x86_64, 24.09/36 hours, beaker_version: 3.34.0, department: unknown, project: Beaker, created_by: cas, name: rhel7_master_and_agent, roles: master, agent, database, dashboard, classifier, default)
 
 ```
-### Install puppetlabs/apply
-https://forge.puppet.com/puppetlabs/apply/readme#usage
+## Setup: Get a windows and linux node for multitask
 ```
-cas@cas-ThinkPad-T460p:~/.puppetlabs/task-modules$ r10k puppetfile install ./Puppetfile
+- t02hlpmgwicjtkh.delivery.puppetlabs.net (ubuntu-1604-x86_64, 3.64/12 hours)
+- x575vokuxtx5b6q.delivery.puppetlabs.net (win-10-1511-x86_64, 0.61/12 hours)
 ```
